@@ -11,11 +11,13 @@ namespace Checkout.ApiServices.Charges.RequestModels
         {
             AutoCapture = Yes;
             ChargeMode = 1;			//Default mode is no 3D
+            AttemptN3D = true;
         }
 
         public string Value { get; set; }
         public string Currency { get; set; }
         public int ChargeMode { get; set; }
+        public bool AttemptN3D { get; set; }
         public string AutoCapture { get; set; }
         public decimal AutoCapTime { get; set; }
         public string CustomerIp { get; set; }
