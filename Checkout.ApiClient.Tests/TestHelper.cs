@@ -189,7 +189,6 @@ namespace Tests
                 AutoCapTime = 1,
                 AutoCapture = "N",
                 ChargeMode = chargeMode,
-                AttemptN3D = true,
                 Email = email,
                 CustomerIp = "82.23.168.254",
                 TrackId = "TRK12345",

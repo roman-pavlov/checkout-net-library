@@ -11,7 +11,6 @@ namespace Checkout.ApiServices.Charges.RequestModels
         {
             AutoCapture = Yes;
             ChargeMode = 1;			//Default mode is no 3D
-            AttemptN3D = true;
         }
 
         public string Value { get; set; }
