@@ -9,13 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Checkout</RootNamespace>
     <AssemblyName>Checkout</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -26,8 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,8 +36,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -47,33 +45,33 @@
   <PropertyGroup>
     <AppConfig>App.$(Configuration).config</AppConfig>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-Net40|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugNet45|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-Net40\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DEBUGNET40</DefineConstants>
+    <OutputPath>bin\DebugNet45\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DEBUGNET45</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-Net40|AnyCPU'">
-    <OutputPath>bin\Release-Net40\</OutputPath>
-    <DefineConstants>TRACE;RELEASENET40</DefineConstants>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNet45|AnyCPU'">
+    <OutputPath>bin\ReleaseNet45\</OutputPath>
+    <DefineConstants>TRACE;RELEASENET45</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)'=='Debug-Net40' or'$(Configuration)'=='Release-Net40'">
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Net.Http, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.dll</HintPath>
       <Private>True</Private>
@@ -90,33 +88,6 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Web" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -125,8 +96,8 @@
     <Compile Include="ApiServices\Charges\RequestModels\BaseChargeInfo.cs" />
     <Compile Include="ApiServices\Charges\RequestModels\ChargeVoid.cs" />
     <Compile Include="ApiServices\Charges\RequestModels\DefaultCardCharge.cs" />
-    <Compile Include="ApiServices\Charges\RequestModels\LocalPaymentCreate.cs" />
     <Compile Include="ApiServices\Charges\RequestModels\LocalPaymentCharge.cs" />
+    <Compile Include="ApiServices\Charges\RequestModels\LocalPaymentCreate.cs" />
     <Compile Include="ApiServices\Charges\ResponseModels\Capture.cs" />
     <Compile Include="ApiServices\Charges\ResponseModels\ChargeHistory.cs" />
     <Compile Include="ApiServices\Charges\ResponseModels\LocalPayment.cs" />
@@ -157,39 +128,39 @@
     <Compile Include="ApiServices\Lookups\ResponseModels\CountryInfo.cs" />
     <Compile Include="ApiServices\Lookups\ResponseModels\LocalPaymentData.cs" />
     <Compile Include="ApiServices\Reporting\ReportingService.cs" />
+    <Compile Include="ApiServices\Reporting\RequestModels\QueryRequest.cs" />
     <Compile Include="ApiServices\Reporting\ResponseModels\Chargeback.cs" />
     <Compile Include="ApiServices\Reporting\ResponseModels\QueryChargebackResponse.cs" />
     <Compile Include="ApiServices\Reporting\ResponseModels\QueryResponse.cs" />
-    <Compile Include="ApiServices\SharedModels\Filter.cs" />
-    <Compile Include="ApiServices\Reporting\RequestModels\QueryRequest.cs" />
-    <Compile Include="ApiServices\Reporting\ResponseModels\Transaction.cs" />
     <Compile Include="ApiServices\Reporting\ResponseModels\QueryTransactionResponse.cs" />
+    <Compile Include="ApiServices\Reporting\ResponseModels\Transaction.cs" />
+    <Compile Include="ApiServices\SharedModels\Filter.cs" />
     <Compile Include="ApiServices\RecurringPayments\RecurringPaymentsService.cs" />
+    <Compile Include="ApiServices\RecurringPayments\RequestModels\BaseRecurringPlan.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\CustomerPaymentPlan.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\CustomerPaymentPlanCreate.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\CustomerPaymentPlanUpdate.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\PaymentPlan.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\PaymentPlanCreate.cs" />
-    <Compile Include="ApiServices\RecurringPayments\RequestModels\RecurringPlanStatus.cs" />
-    <Compile Include="ApiServices\RecurringPayments\RequestModels\SinglePaymentPlanCreateRequest.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\PaymentPlanUpdate.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\QueryCustomerPaymentPlanRequest.cs" />
     <Compile Include="ApiServices\RecurringPayments\RequestModels\QueryPaymentPlanRequest.cs" />
-    <Compile Include="ApiServices\RecurringPayments\RequestModels\BaseRecurringPlan.cs" />
-    <Compile Include="ApiServices\RecurringPayments\ResponseModels\SinglePaymentPlanCreateResponse.cs" />
+    <Compile Include="ApiServices\RecurringPayments\RequestModels\RecurringPlanStatus.cs" />
+    <Compile Include="ApiServices\RecurringPayments\RequestModels\SinglePaymentPlanCreateRequest.cs" />
     <Compile Include="ApiServices\RecurringPayments\ResponseModels\QueryCustomerPaymentPlanResponse.cs" />
     <Compile Include="ApiServices\RecurringPayments\ResponseModels\QueryPaymentPlanResponse.cs" />
+    <Compile Include="ApiServices\RecurringPayments\ResponseModels\SinglePaymentPlanCreateResponse.cs" />
     <Compile Include="ApiServices\SharedModels\BasePagination.cs" />
     <Compile Include="ApiServices\SharedModels\BillingDescriptor.cs" />
-    <Compile Include="ApiServices\SharedModels\IQueryResponse.cs" />
     <Compile Include="ApiServices\SharedModels\IQueryRequest.cs" />
+    <Compile Include="ApiServices\SharedModels\IQueryResponse.cs" />
     <Compile Include="ApiServices\SharedModels\Phone.cs" />
     <Compile Include="ApiServices\SharedModels\SortColumn.cs" />
     <Compile Include="ApiServices\SharedModels\SortOrder.cs" />
+    <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenCreate.cs" />
+    <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenUpdate.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\VisaCheckoutTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\ResponseModels\CardTokenResponse.cs" />
-    <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenUpdate.cs" />
-    <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\ResponseModels\PaymentTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\TokenService.cs" />
     <Compile Include="Helpers\ApiHttpClient.cs" />
@@ -235,16 +206,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App.Debug-Net40.config" />
     <None Include="App.Debug.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="App.Release.config" />
-    <None Include="Checkout.APIClient.nuspec" />
-    <None Include="Diagrams\Recurring Payments Diagram.cd" />
-    <None Include="Diagrams\ClassDiagram.cd" />
+    <None Include="App.DebugNet45.config" />
+    <None Include="App.Release.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="App.ReleaseNet45.config" />
     <None Include="CreateNugetPackage.bat" />
-    <None Include="packages.config" />
+    <None Include="Diagrams\ClassDiagram.cd" />
+    <None Include="NuGet.nuspec" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiServices\SharedModels\HttpResponse.cs" />

@@ -22,7 +22,7 @@ var configurationNet45 = Argument("configuration", "ReleaseNet45");
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
 var isCIBuild			= !BuildSystem.IsLocalBuild;
-var solutionPath        = "./Checkout.ApiClient.Net40.sln";
+var solutionPath        = "./Checkout.ApiClient.sln";
 var testPath            = "./Checkout.ApiClient.Tests/bin/" + configurationNet40 + "/Tests.dll";
 var buildArtifacts      = Directory("./artifacts");
 var libs                = Directory("./packages/_lib");
@@ -124,7 +124,7 @@ Task("__CreateNuGetPackage")
 	{
 		FilePath nugetPath = Context.Tools.Resolve("nuget.exe");
 		StartProcess(nugetPath, new ProcessSettings {
-			Arguments = new ProcessArgumentBuilder().Append("pack").Append("./Checkout.ApiClient.Net40/NuGet.nuspec")
+			Arguments = new ProcessArgumentBuilder().Append("pack").Append("./Checkout.ApiClient/NuGet.nuspec")
 		});
 	});
 
