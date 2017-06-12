@@ -14,7 +14,8 @@
 // ARGUMENTS
 //////////////////////////////////////////////////////////////////////
 var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
+var configurationNet40 = Argument("configuration", "Release");
+var configurationNet45 = Argument("configuration", "ReleaseNet45");
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,10 +23,9 @@ var configuration = Argument("configuration", "Release");
 ///////////////////////////////////////////////////////////////////////////////
 var isCIBuild			= !BuildSystem.IsLocalBuild;
 var solutionPath        = "./Checkout.ApiClient.Net40.sln";
-var testPath            = "./Checkout.ApiClient.Tests/bin/" + configuration + "/Tests.dll";
+var testPath            = "./Checkout.ApiClient.Tests/bin/" + configurationNet40 + "/Tests.dll";
 var buildArtifacts      = Directory("./artifacts");
 var libs                = Directory("./packages/_lib");
-//var coverageResult      = buildArtifacts + File("result.dcvr");
 
 var gitVersionInfo = GitVersion(new GitVersionSettings {
 	OutputType = GitVersionOutput.Json
@@ -39,12 +39,13 @@ var nugetVersion = gitVersionInfo.NuGetVersion;
 ///////////////////////////////////////////////////////////////////////////////
 Setup(context =>
 {
-	Information("Building Checkout NET Library v{0} with configuration {1}", nugetVersion, configuration);
+	Information("Building Checkout NET Library v{0} with configurations {1} and {2}", nugetVersion, configurationNet40, configurationNet45);
+	context.Tools.RegisterFile("./tools/nuget.exe");
 });
 
 Teardown(context =>
 {
-	Information("Finished running tasks. Test Path: {0}, config: {1}", testPath, configuration);
+	Information("Finished running tasks. Test Path: {0}, configs: {1} and ", testPath, configurationNet40, configurationNet45);
 });
 
 //////////////////////////////////////////////////////////////////////
@@ -57,7 +58,12 @@ Task("__Clean")
 		CleanDirectories(new DirectoryPath[] { buildArtifacts, libs });
 
 		DotNetBuild(solutionPath, settings => settings
-			.SetConfiguration(configuration)
+			.SetConfiguration(configurationNet40)
+			.WithTarget("Clean")
+			.SetVerbosity(Verbosity.Minimal));
+
+		DotNetBuild(solutionPath, settings => settings
+			.SetConfiguration(configurationNet45)
 			.WithTarget("Clean")
 			.SetVerbosity(Verbosity.Minimal));
 	});
@@ -89,7 +95,19 @@ Task("__Build")
 		var packagePath = string.Concat("\"", MakeAbsolute(buildArtifacts).FullPath, "\"");
 
 		DotNetBuild(solutionPath, settings => settings
-			.SetConfiguration(configuration)
+			.SetConfiguration(configurationNet40)
+			.WithTarget("Rebuild")
+			.SetVerbosity(Verbosity.Minimal)
+			.WithProperty("WarningLevel", "0")
+
+			// There's no point running build twice so create the in the initial build
+			.WithProperty("RunOctoPack", "true")
+			.WithProperty("OctoPackPackageVersion", nugetVersion)
+			.WithProperty("OctoPackPublishPackageToFileShare", packagePath)
+			.WithProperty("WarningLevel", "0"));		
+
+		DotNetBuild(solutionPath, settings => settings
+			.SetConfiguration(configurationNet45)
 			.WithTarget("Rebuild")
 			.SetVerbosity(Verbosity.Minimal)
 			.WithProperty("WarningLevel", "0")
@@ -101,11 +119,20 @@ Task("__Build")
 			.WithProperty("WarningLevel", "0"));		
 	});
 
+Task("__CreateNuGetPackage")
+	.Does(() => 
+	{
+		FilePath nugetPath = Context.Tools.Resolve("nuget.exe");
+		StartProcess(nugetPath, new ProcessSettings {
+			Arguments = new ProcessArgumentBuilder().Append("pack").Append("./Checkout.ApiClient.Net40/NuGet.nuspec")
+		});
+	});
+
 Task("__Test")
 	.Does(() =>
 	{
 		NUnit3(testPath, new NUnit3Settings {
-			Configuration = configuration,
+			Configuration = configurationNet40,
 			NoHeader = true,
 			Results = buildArtifacts + File("TestResults.xml"),
 			OutputFile = buildArtifacts + File("TestOutput.txt"), // Have to do that to redirect Console logging
@@ -141,6 +168,7 @@ Task("Package")
 	.IsDependentOn("__Restore")
 	.IsDependentOn("__UpdateAssemblyVersionInformation")
 	.IsDependentOn("__Build")
+	.IsDependentOn("__CreateNuGetPackage")
     .IsDependentOn("__Test");
 
 

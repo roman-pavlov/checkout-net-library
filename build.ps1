@@ -43,7 +43,8 @@ Param(
     [string]$Script = "build.cake",
     [string]$Target = "Default",
     [ValidateSet("Release", "Debug", "DebugNet45", "ReleaseNet45")]
-    [string]$Configuration = "Release",
+    [string]$ConfigurationNet40 = "Release",
+	[string]$ConfigurationNet45 = "ReleaseNet45",
     [ValidateSet("Quiet", "Minimal", "Normal", "Verbose", "Diagnostic")]
     [string]$Verbosity = "Verbose",
     [switch]$Experimental,
@@ -185,5 +186,5 @@ if (!(Test-Path $CAKE_EXE)) {
 
 # Start Cake
 Write-Host "Running build script..."
-Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configuration=`"$Configuration`" -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
+Invoke-Expression "& `"$CAKE_EXE`" `"$Script`" -target=`"$Target`" -configurationNet40=`"$ConfigurationNet40`" -configurationNet45=`"$ConfigurationNet45`"  -verbosity=`"$Verbosity`" $UseMono $UseDryRun $UseExperimental $ScriptArgs"
 exit $LASTEXITCODE
