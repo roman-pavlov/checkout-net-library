@@ -21,8 +21,7 @@ var configuration = Argument("configuration", "Release");
 // GLOBAL VARIABLES
 ///////////////////////////////////////////////////////////////////////////////
 var isCIBuild			= !BuildSystem.IsLocalBuild;
-var solutionPathNet45   = "./Checkout.ApiClient.Net45.sln";
-var solutionPathNet40   = "./Checkout.ApiClient.Net40.sln";
+var solutionPath        = "./Checkout.ApiClient.Net40.sln";
 var testPath            = "./Checkout.ApiClient.Tests/bin/" + configuration + "/Tests.dll";
 var buildArtifacts      = Directory("./artifacts");
 var libs                = Directory("./packages/_lib");
@@ -57,12 +56,7 @@ Task("__Clean")
 	{
 		CleanDirectories(new DirectoryPath[] { buildArtifacts, libs });
 
-		DotNetBuild(solutionPathNet45, settings => settings
-			.SetConfiguration(configuration)
-			.WithTarget("Clean")
-			.SetVerbosity(Verbosity.Minimal));
-
-		DotNetBuild(solutionPathNet40, settings => settings
+		DotNetBuild(solutionPath, settings => settings
 			.SetConfiguration(configuration)
 			.WithTarget("Clean")
 			.SetVerbosity(Verbosity.Minimal));
@@ -71,8 +65,7 @@ Task("__Clean")
 Task("__Restore")
 	.Does(() =>
 	{
-		NuGetRestore(solutionPathNet45);
-		NuGetRestore(solutionPathNet40);
+		NuGetRestore(solutionPath);
 	});
 
 Task("__UpdateAssemblyVersionInformation")
@@ -95,7 +88,7 @@ Task("__Build")
 	{
 		var packagePath = string.Concat("\"", MakeAbsolute(buildArtifacts).FullPath, "\"");
 
-		DotNetBuild(solutionPathNet45, settings => settings
+		DotNetBuild(solutionPath, settings => settings
 			.SetConfiguration(configuration)
 			.WithTarget("Rebuild")
 			.SetVerbosity(Verbosity.Minimal)
@@ -105,19 +98,7 @@ Task("__Build")
 			.WithProperty("RunOctoPack", "true")
 			.WithProperty("OctoPackPackageVersion", nugetVersion)
 			.WithProperty("OctoPackPublishPackageToFileShare", packagePath)
-			.WithProperty("WarningLevel", "0"));
-
-		DotNetBuild(solutionPathNet40, settings => settings
-			.SetConfiguration(configuration)
-			.WithTarget("Rebuild")
-			.SetVerbosity(Verbosity.Minimal)
-			.WithProperty("WarningLevel", "0")
-
-			// There's no point running build twice so create the in the initial build
-			.WithProperty("RunOctoPack", "true")
-			.WithProperty("OctoPackPackageVersion", nugetVersion)
-			.WithProperty("OctoPackPublishPackageToFileShare", packagePath)
-			.WithProperty("WarningLevel", "0"));
+			.WithProperty("WarningLevel", "0"));		
 	});
 
 Task("__Test")

@@ -94,7 +94,13 @@ namespace Checkout
                 Console.WriteLine(string.Format("\n\n** Request ** Post {0}", requestUri));
             }
 
-            return SendRequest<T>(httpRequestMsg).Result;
+#if DEBUGNET40
+            return SendRequest<T>(httpRequestMsg);
+#elif RELEASENET40
+            return SendRequest<T>(httpRequestMsg);
+#else
+            return SendRequest<T>(httpRequestMsg).Result; 
+#endif
         }
 
         /// <summary>
@@ -116,7 +122,13 @@ namespace Checkout
                 Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
             }
 
-            return SendRequest<T>(httpRequestMsg).Result;
+#if DEBUGNET40
+            return SendRequest<T>(httpRequestMsg);
+#elif RELEASENET40
+            return SendRequest<T>(httpRequestMsg);
+#else
+            return SendRequest<T>(httpRequestMsg).Result; 
+#endif
         }
 
         /// <summary>
@@ -138,7 +150,13 @@ namespace Checkout
                 Console.WriteLine(string.Format("\n\n** Payload ** \n {0} \n", requestPayloadAsString));
             }
 
-            return SendRequest<T>(httpRequestMsg).Result;
+#if DEBUGNET40
+            return SendRequest<T>(httpRequestMsg);
+#elif RELEASENET40
+            return SendRequest<T>(httpRequestMsg);
+#else
+            return SendRequest<T>(httpRequestMsg).Result; 
+#endif
         }
 
         /// <summary>
@@ -158,25 +176,48 @@ namespace Checkout
             {
                 Console.WriteLine(string.Format("\n\n** Request ** Delete {0}", requestUri));
             }
-
+#if DEBUGNET40
+            return SendRequest<T>(httpRequestMsg);
+#elif RELEASENET40
+            return SendRequest<T>(httpRequestMsg);
+#else
             return SendRequest<T>(httpRequestMsg).Result; 
+#endif
         }
+
+
 
         /// <summary>
         /// Sends a http request with the given object. All headers should be set manually here e.g. content type=application/json
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
+#if DEBUGNET40
+        private HttpResponse<T> SendRequest<T>(HttpRequestMessage request)
+#elif RELEASENET40
+        private HttpResponse<T> SendRequest<T>(HttpRequestMessage request)
+#else
         private Task<HttpResponse<T>> SendRequest<T>(HttpRequestMessage request)
+#endif
         {
+#if DEBUGNET40
+            HttpResponse<T> response = null;
+#elif RELEASENET40
+            HttpResponse<T> response = null;
+#else
             Task<HttpResponse<T>> response = null;
+#endif
             HttpResponseMessage responseMessage = null;
             string responseAsString = null;
             string responseCode = null;
 
             try
             {
+#if Debug
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#elif Release
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+#endif
 
                 responseMessage = httpClient.SendAsync(request).Result; 
                
@@ -193,8 +234,13 @@ namespace Checkout
                         Console.WriteLine(string.Format("\n** HttpResponse - Status {0}**\n {1}\n", responseMessage.StatusCode, responseAsString));
                     }
                 }
-
+#if DEBUGNET40
+                response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
+#elif RELEASENET40
+                response = CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode);
+#else
                 response = Task.FromResult(CreateHttpResponse<T>(responseAsString, responseMessage.StatusCode));
+#endif
             }
             catch (Exception ex)
             {

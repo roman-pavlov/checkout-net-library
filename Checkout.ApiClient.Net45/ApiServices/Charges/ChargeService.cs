@@ -1,8 +1,7 @@
-
 using Checkout.ApiServices.Charges.RequestModels;
 using Checkout.ApiServices.Charges.ResponseModels;
 using Checkout.ApiServices.SharedModels;
-using Checkout.Utilities;
+
 namespace Checkout.ApiServices.Charges
 {
     public class ChargeService 
