@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Checkout.ApiClient</id>
-			<version>1.3.0.6</version>
+			<version>$version$</version>
 			<title>Checkout.ApiClient</title>
 			<authors>Muhsin Meydan</authors>
 			<owners>Checkout.com</owners>

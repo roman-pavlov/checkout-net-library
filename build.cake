@@ -124,7 +124,7 @@ Task("__CreateNuGetPackage")
 	{
 		FilePath nugetPath = Context.Tools.Resolve("nuget.exe");
 		StartProcess(nugetPath, new ProcessSettings {
-			Arguments = new ProcessArgumentBuilder().Append("pack").Append("./Checkout.ApiClient/NuGet.nuspec")
+			Arguments = new ProcessArgumentBuilder().Append("pack").Append("./Checkout.ApiClient/NuGet.nuspec").Append("-Version " + gitVersionInfo.MajorMinorPatch)
 		});
 	});
 
