@@ -68,6 +68,8 @@
             _recurringCustomerPaymentPlanSearchApiUri = null;
             _recurringCustomerPaymentPlanApiUri = null;
             _localPaymentChargesApiUri = null;
+
+            Shopping.ResetApiUrls();
         }
 
         public static string Charges
@@ -182,5 +184,26 @@
                 _recurringCustomerPaymentPlanApiUri ??
                 (_recurringCustomerPaymentPlanApiUri =
                     string.Concat(AppSettings.BaseApiUri, "/recurringPayments/customers/{0}"));
+
+        public static class Shopping
+        {
+            private static string _drinksApiUri;
+            public static string Drinks => _drinksApiUri ?? (_drinksApiUri = string.Concat(AppSettings.BaseApiUri, "/drinks"));
+
+
+            private static string _drinksCountPagesApiUri;
+            public static string DrinksCountPagesApiUri => _drinksCountPagesApiUri ?? 
+                (_drinksCountPagesApiUri = string.Concat(AppSettings.BaseApiUri, "/drinks?$inlinecount=allpages"));
+
+            private static string _drinkApiUri;
+            public static string Drink => _drinkApiUri ?? (_drinkApiUri = string.Concat(AppSettings.BaseApiUri, "/drinks/{0}"));
+
+            public static void ResetApiUrls()
+            {
+                _drinksApiUri = null;
+                _drinkApiUri = null;
+                _drinksCountPagesApiUri = null;
+            }
+        }
     }
 }

@@ -82,9 +82,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApiServices\Customers\ResponseModels\CustomerCard.cs" />
-    <Compile Include="ApiServices\Customers\ResponseModels\CustomerList.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="ApiServices\Customers\ResponseModels\CustomerList.cs" />
     <Compile Include="ApiServices\Lookups\LookupsService.cs" />
     <Compile Include="ApiServices\Lookups\ResponseModels\CountryInfo.cs" />
     <Compile Include="ApiServices\Lookups\ResponseModels\LocalPaymentData.cs" />
@@ -118,6 +116,11 @@
     <Compile Include="ApiServices\SharedModels\Phone.cs" />
     <Compile Include="ApiServices\SharedModels\SortColumn.cs" />
     <Compile Include="ApiServices\SharedModels\SortOrder.cs" />
+    <Compile Include="ApiServices\Shopping\RequestModels\DrinkGetList.cs" />
+    <Compile Include="ApiServices\Shopping\ResponseModels\DrinkList.cs" />
+    <Compile Include="ApiServices\Shopping\ResponseModels\Drink.cs" />
+    <Compile Include="ApiServices\Shopping\RequestModels\DrinkRequest.cs" />
+    <Compile Include="ApiServices\Shopping\ShoppingListService.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\VisaCheckoutTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\ResponseModels\CardTokenResponse.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\PaymentTokenUpdate.cs" />

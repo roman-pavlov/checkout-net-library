@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Text.RegularExpressions;
 using CheckoutEnvironment = Checkout.Helpers.Environment;
 namespace Checkout
 {
@@ -17,6 +18,7 @@ namespace Checkout
         private static int? _maxResponseContentBufferSize;
         private static int? _requestTimeout;
         private static bool? _debugMode;
+        private static string _settingsGroup;
         private const string _liveUrl = "https://api2.checkout.com/v2";
         private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
         public const string ClientUserAgentName = "Checkout-DotNetLibraryClient/v1.0";
@@ -89,16 +91,21 @@ namespace Checkout
 
             set
             {
+                _environment = value;
                 switch (value)
                 {
+                    //TODO: Move base Urls to configuration for Live and Sandbox
                     case CheckoutEnvironment.Live:
                         _baseApiUri = _liveUrl;
                         break;
                     case CheckoutEnvironment.Sandbox:
                         _baseApiUri = _sandboxUrl;
                         break;
+                    case CheckoutEnvironment.Local:
+                        _settingsGroup = _environment.ToString();
+                        _baseApiUri = ReadConfig("Checkout.BaseUrl", true);
+                        break;
                 };
-                _environment = value;
                 ApiUrls.ResetApiUrls();
 
             }
@@ -117,7 +124,13 @@ namespace Checkout
         {
             try
             {
-                return ConfigurationManager.AppSettings[key].ToString();
+                if (!string.IsNullOrEmpty(_settingsGroup) && 
+                    !Regex.IsMatch(key,$"\\.{_settingsGroup}$", RegexOptions.Singleline))
+                {
+                    key = $"{key}.{_settingsGroup}";
+                }
+
+                return ConfigurationManager.AppSettings[key];
             }
             catch (Exception)
             {

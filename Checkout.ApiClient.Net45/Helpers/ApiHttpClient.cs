@@ -3,13 +3,11 @@ using Checkout.Helpers;
 using Checkout.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Checkout
@@ -219,23 +217,27 @@ namespace Checkout
 
         private HttpResponse<T> CreateHttpResponse<T>(string responseAsString, HttpStatusCode httpStatusCode)
         {
-            if (httpStatusCode == HttpStatusCode.OK && responseAsString != null)
+            if (IsSuccessfulContent(httpStatusCode))
             {
-                return new HttpResponse<T>(GetResponseAsObject<T>(responseAsString))
+                var model = responseAsString != null ? GetResponseAsObject<T>(responseAsString) : default(T);
+                return new HttpResponse<T>(model)
                 {
                     HttpStatusCode = httpStatusCode
                 };
             }
-            else if (responseAsString != null)
+            else
             {
                 return new HttpResponse<T>(default(T))
                 {
-                    Error = GetResponseAsObject<ResponseError>(responseAsString),
+                    Error = (responseAsString != null) ? GetResponseAsObject<ResponseError>(responseAsString) : null,
                     HttpStatusCode = httpStatusCode
                 };
             }
+        }
 
-            return null;
+        private static bool IsSuccessfulContent(HttpStatusCode httpStatusCode)
+        {
+            return httpStatusCode == HttpStatusCode.OK || httpStatusCode == HttpStatusCode.Created;
         }
 
         private string GetObjectAsString(object requestModel)
