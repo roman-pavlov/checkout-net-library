@@ -14,10 +14,13 @@ namespace Tests.ShoppingListService
     {
         protected APIClient LocalServiceClient;
 
-        [SetUp]
-        public void Init()
+        [TestFixtureSetUp]
+        public void FixtureInit()
         {
             LocalServiceClient = new APIClient(Environment.Local);
+            var login = new LoginRequest() { UserName = AppSettings.UserName, Password = AppSettings.Password};
+            // Save JWT token for future use
+            AppSettings.SecretKey = $"Bearer {LocalServiceClient.ShoppingAuthenticationService.GetToken(login).Model.Message}";
         }
 
         [TestCase("Coke", 100)]

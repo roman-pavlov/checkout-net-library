@@ -187,6 +187,9 @@
 
         public static class Shopping
         {
+            private static string _authApiUri;
+            public static string AuthApiUri => _authApiUri ?? (_authApiUri = string.Concat(AppSettings.BaseApiUri, "/token"));
+
             private static string _drinksApiUri;
             public static string Drinks => _drinksApiUri ?? (_drinksApiUri = string.Concat(AppSettings.BaseApiUri, "/drinks"));
 

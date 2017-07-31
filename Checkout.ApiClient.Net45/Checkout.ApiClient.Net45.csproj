@@ -117,9 +117,11 @@
     <Compile Include="ApiServices\SharedModels\SortColumn.cs" />
     <Compile Include="ApiServices\SharedModels\SortOrder.cs" />
     <Compile Include="ApiServices\Shopping\RequestModels\DrinkGetList.cs" />
+    <Compile Include="ApiServices\Shopping\RequestModels\Login.cs" />
     <Compile Include="ApiServices\Shopping\ResponseModels\DrinkList.cs" />
     <Compile Include="ApiServices\Shopping\ResponseModels\Drink.cs" />
     <Compile Include="ApiServices\Shopping\RequestModels\DrinkRequest.cs" />
+    <Compile Include="ApiServices\Shopping\ShoppingAuthenticationService.cs" />
     <Compile Include="ApiServices\Shopping\ShoppingListService.cs" />
     <Compile Include="ApiServices\Tokens\RequestModels\VisaCheckoutTokenCreate.cs" />
     <Compile Include="ApiServices\Tokens\ResponseModels\CardTokenResponse.cs" />

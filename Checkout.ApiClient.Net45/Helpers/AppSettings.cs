@@ -19,6 +19,8 @@ namespace Checkout
         private static int? _requestTimeout;
         private static bool? _debugMode;
         private static string _settingsGroup;
+        private static string _userName;
+        private static string _password;
         private const string _liveUrl = "https://api2.checkout.com/v2";
         private const string _sandboxUrl = "https://sandbox.checkout.com/api2/v2";
         public const string ClientUserAgentName = "Checkout-DotNetLibraryClient/v1.0";
@@ -82,6 +84,17 @@ namespace Checkout
             }
             set { _debugMode = value; }
         }
+        public static string UserName
+        {
+            get { return _userName ?? (_userName = ReadConfig("Checkout.UserName")); }
+            set { _userName = value; }
+        }
+        public static string Password
+        {
+            get { return _password ?? (_password = ReadConfig("Checkout.Password")); }
+            set { _password = value; }
+        }
+
         public static CheckoutEnvironment Environment
         {
             get
